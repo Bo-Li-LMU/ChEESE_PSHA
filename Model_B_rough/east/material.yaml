@@ -1,0 +1,76 @@
+!Switch
+[bulkFriction]: !ConstantMap
+  map:
+    bulkFriction: 0.6
+[rho, mu, lambda, Qs, Qp]: !IdentityMap
+  components:
+    - !ASAGI
+      file: vel_test.nc
+      parameters: [rho, mu, lambda]
+      var: data
+      components: !FunctionMap
+        map:
+          rho:    return rho;
+          mu:     return mu;
+          lambda: return lambda;
+          Qs:     return 0.1 * sqrt(mu/rho);
+          Qp:     return 0.2 * sqrt(mu/rho);
+    - !LayeredModel
+        map: !AffineMap
+          matrix:
+            depth: [0.0, 0.0, 1.0]
+          translation:
+            depth: 0
+        interpolation: linear
+        parameters: [rho, mu, lambda, Qs, Qp]
+        nodes:
+            3000:   [2500, 11654000000, 12792000000, 215.9, 431.8]
+            -500:   [2500, 11654000000, 12792000000, 215.9, 431.8]
+            -2500:  [2700, 23569000000, 25870000000, 295.4, 590.9]
+            -5000:  [2800, 38191000000, 41918000000, 369.3, 738.6]
+            -7000:  [2850, 42544000000, 46696000000, 386.4, 772.8]
+            -11000: [2950, 46665000000, 51220000000, 397.7, 795.4]
+            -20000: [2950, 47873000000, 52545000000, 402.8, 805.6]
+            -28000: [3100, 52603000000, 57737000000, 411.9, 823.8]
+            -32000: [3150, 55686000000, 61121000000, 420.4, 840.8]
+            -60000: [3260, 62398000000, 68489000000, 437.5, 875.0]
+            -1000000:  [3330, 65942325000, 81235350000, 445.0, 890.0]
+[plastCo]: !IdentityMap
+  components:
+    - !SphericalDomainFilter
+      radius: 1500
+      centre:
+        x:  677653.7
+        y:  7323307.4
+        z:  -7000
+      components: !ConstantMap
+        map:
+          plastCo: 1.0e20
+    - !ASAGI
+      file: vel_test.nc
+      parameters: [rho, mu, lambda]
+      var: data
+      components: !FunctionMap
+        map:
+          plastCo: return mu*0.0001;
+    - !LayeredModel
+        map: !AffineMap
+          matrix:
+            depth: [0.0, 0.0, 1.0]
+          translation:
+            depth: 0
+        interpolation: linear
+        parameters: [plastCo]
+        nodes:
+            3000:   [1165400]
+            -500:   [1165400]
+            -2500:  [2356900]
+            -5000:  [3819100]
+            -7000:  [4254400]
+            -11000: [4666500]
+            -20000: [4787300]
+            -28000: [5260300]
+            -32000: [5568600]
+            -60000: [6239800]
+            -1000000:  [6594232]
+[s_xx, s_yy, s_zz, s_xy, s_yz, s_xz]: !Include initial_stress.yaml

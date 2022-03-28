@@ -1,0 +1,17 @@
+<freeSurface>76</freeSurface>
+<dynamicRupture>65,71,80,81</dynamicRupture>
+<absorbing>66,68,69,72,74</absorbing>
+<surfaceMSize value="1000">76</surfaceMSize>
+<surfaceMSize value="150">65,71,80,81</surfaceMSize>
+<gradation value="0.6"/>
+<area_AspectRatio value="6"/>
+<vol_AspectRatio value="12"/>
+<SurfaceMeshing SmoothingLevel="1" SmoothingType="Gradient" DiscreteAngle="15.0" Snap="0"></SurfaceMeshing>
+<VolumeMeshing  SmoothingLevel="1" SmoothingType="Gradient" SetOptimisation="1"></VolumeMeshing>
+<VelocityAwareMeshing easiFile="material.yaml" elementsPerWaveLength="4">
+    <VelocityRefinementCuboid frequency="1" centerX="639e3" centerY="7.34e6" centerZ="0"
+	    halfSizeX="100e3" halfSizeY="70e3" halfSizeZ="60e3" bypassFindRegionAndUseGroup="1" rotationZAnticlockwiseFromX="155.0"/>
+    <VelocityRefinementCuboid frequency="0.5" centerX="639e3" centerY="7.34e6" centerZ="0"
+            halfSizeX="130e3" halfSizeY="100e3" halfSizeZ="100e3" bypassFindRegionAndUseGroup="1" rotationZAnticlockwiseFromX="155.0"/>
+    <VelocityRefinementCuboid frequency="0.1" centerX="639e3" centerY="7.34e6" centerZ="0"                                             halfSizeX="90e9" halfSizeY="90e9" halfSizeZ="50e9" bypassFindRegionAndUseGroup="1"/>
+</VelocityAwareMeshing>

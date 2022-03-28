@@ -1,0 +1,37 @@
+!Switch
+[mu_d, mu_s]: !ConstantMap
+  map:
+    mu_d: 0.1
+    mu_s: 0.55
+[d_c]: !IdentityMap
+  components:
+    - !SphericalDomainFilter
+      radius: 2000
+      centre:
+        x:  606405.1
+        y:  7357136.2
+        z:  -7000
+      components: !ConstantMap
+        map:
+          d_c: 0.2
+    - !ConstantMap
+      map:
+        d_c: 0.5 
+[cohesion, forced_rupture_time]: !FunctionMap
+  map:
+    cohesion: |
+      cohesion = -400000.0;
+      zIncreasingCohesion = 10000.0;
+      if (z >= -zIncreasingCohesion) {
+        return cohesion - 2000000.0 * (z+zIncreasingCohesion)/zIncreasingCohesion;
+      }
+      return cohesion;
+    forced_rupture_time: |
+      r = sqrt(pow(x-606405.1, 2.0) + pow(y-7357136.2, 2.0) + pow(z+7000.0, 2.0));
+      r_crit = 1500.0;
+      Vs = 3800.0;
+      if (r <= r_crit) {
+        return r/(0.7*Vs)+(0.081.0*r_crit/(0.7.0*Vs))*(1.0/(1.0-pow(r/r_crit, 2.0))-1.0);
+      }
+      return 1000000000.0;
+[s_xx, s_yy, s_zz, s_xy, s_yz, s_xz]: !Include initial_stress.yaml
