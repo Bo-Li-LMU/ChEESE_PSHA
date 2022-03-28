@@ -1,0 +1,9 @@
+HFF_model	upperSeismoDepth	0.
+HFF_model	lowerSeismoDepth	8.
+HFF_model	ruptAspectRatio	1.
+HFF_model	nodalPlane	0.7	270.	60.	-90.
+HFF_model	nodalPlane	0.3	90.	60.	-90.
+HFF_model	hypoDepth	0.2	2.
+HFF_model	hypoDepth	0.3	4.
+HFF_model	hypoDepth	0.3	6.
+HFF_model	hypoDepth	0.2	8.
